@@ -9,7 +9,7 @@ Both of us love Wordle.
 # Installation
 
 ```bash
-git clone https://github.com/AK81/wordinal
+git clone https://github.com/AK81/wordinal && cd wordinal
 ./wordinal.py
 ```
 
