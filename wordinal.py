@@ -330,7 +330,7 @@ def app(screen):
                     return ch.upper()
 
                 # Return '\b' for backspace
-                if ch == chr(KEY_BACKSPACE):
+                if ch in [chr(8), chr(KEY_BACKSPACE)]:
                     return '\b'
 
             except:
