@@ -228,9 +228,9 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 	 for (var j=0; j < row.children.length; ++j) {
 	     var key = row.children[j]
 	     if (i == 0)
-		 key.style.fontSize = "20pt"
-	     else
 		 key.style.fontSize = "22pt"
+	     else
+		 key.style.fontSize = "24pt"
 	     key.style.border = "1px outset grey"
 	     key.style.padding = "2pt"
 	     key.style.visibility = "visible"
@@ -267,21 +267,23 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
  var col = 0;
  var guess = '';
  var solution = 'UNDEF'
- var nextGame = false
+ var newGame = false
 
  function processKey(key) {
-     if (row >= NUM_GUESSES) {
+     if (newGame){
+	 newGame = false
 	 game()
 	 return
      }
      if (key.length == 1 && isAlpha(key) && guess.length < WORD_LENGTH) {
-
+	 key = key.toUpperCase()
+	 
 	 var keybox = document.getElementById(key)
 	 if (keybox.style.visibility == 'hidden')
 	     return
 	 
-	 guesses.children[row].children[col].textContent = '\u2003' + key.toUpperCase() + '\u2003'
-	 guess += key.toUpperCase()
+	 guesses.children[row].children[col].textContent = '\u2003' + key + '\u2003'
+	 guess += key
 	 if (++col >= WORD_LENGTH) {
 	     if (!allWords.has(guess)) {
 		 return
@@ -295,6 +297,7 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 		     row += 1
 		     col = 0;
 		     if (row >= NUM_GUESSES) {
+			 newGame = true
 			 setTimeout(function () {
 			     alert("You lost! Word was " + solution);
 			 }, (WORD_LENGTH+2)*150)
@@ -302,7 +305,8 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 		     return;
 		 }
 	     }
-	     row += 1
+
+	     newGame = true
 	     setTimeout(function () {
 		 alert("You Won!")
 	     }, (WORD_LENGTH+2)*150)
