@@ -100,7 +100,10 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 
 </div>
 
-
+<div align=center>
+<a align=center href="whatsapp://send?text=This is WhatsApp sharing example using link"       data-action="share/whatsapp/share"  
+ target="_blank"> Share to WhatsApp </a>
+</div>
  <script type="text/javascript">
 
  // Length of the solution word.
@@ -355,6 +358,22 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
      guesses.focus()
  }
 
+
  game()
+
+ var replayStr = window.location.search
+ if (replayStr != "") {
+     var words = atob(replayStr.substring(1)).split('|')
+     solution = words[0]
+     delay = 0
+     for (var i=1; i < words.length; ++i) {
+	 var word = words[i]
+	 for (var j=0; j < word.length; ++j) {
+	     setTimeout(processKey, delay, word[j])
+	     delay += 300
+	 }
+	 delay += (WORD_LENGTH + 5) * 150
+     }
+ }
 
  </script>
