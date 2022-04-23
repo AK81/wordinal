@@ -1,5 +1,6 @@
 ---
 ---
+
 <!---
   Copyright (c) Anand Krishnamoorthi
   Licensed under the MIT License.
@@ -100,10 +101,8 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 
 </div>
 
-<div align=center>
-<a align=center href="whatsapp://send?text=This is WhatsApp sharing example using link"       data-action="share/whatsapp/share"  
- target="_blank"> Share to WhatsApp </a>
-</div>
+ <div align=center><button align=center onclick="share()">Share</button></div>
+ 
  <script type="text/javascript">
 
  // Length of the solution word.
@@ -189,7 +188,7 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
  }
 
  var guesses = document.getElementById("guesses");
-
+ 
  function clearGuess(row) {
      var div = guesses.children[row];
      div.style.fontSize = "3px"
@@ -204,7 +203,6 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 	 div.children[c].style.textShadow = '1px 1px gray'
      }
  }
-
 
  function drawGrade(row, grade) {
      var guessDiv = guesses.children[row];
@@ -269,6 +267,7 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
  var row = 0;
  var col = 0;
  var guess = '';
+ var attempts = [];
  var solution = 'UNDEF'
  var newGame = false
 
@@ -291,6 +290,7 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 	     if (!allWords.has(guess)) {
 		 return
 	     }
+	     attempts.push(guess)
 	     var grade = gradeGuess(guess, solution)
 	     drawGrade(row, grade)
 	     setTimeout(updateKeyboard, (WORD_LENGTH+2)*150, guess, grade)
@@ -345,6 +345,7 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
      row = 0;
      col = 0;
      guess = '';
+     attempts = [];
      solution = solutionWords[Math.floor(Math.random() * solutionWords.length)]
 
      for (var r=0; r < NUM_GUESSES; ++r)
@@ -376,4 +377,11 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
      }
  }
 
+ function share() {
+     var str = solution + "|" + attempts.join("|")
+     var url = window.location + "?" + btoa(str)
+     url = "https://api.whatsapp.com/send?text="+url
+     window.open(url, '_blank').focus();
+ }
+ 
  </script>
