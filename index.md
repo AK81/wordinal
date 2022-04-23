@@ -101,7 +101,12 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
 
 </div>
 
- <div align=center><button align=center onclick="share()">Share</button></div>
+ <div align=center>
+ <span align=center onclick="share(null)" id="share" style="border:2px solid grey; padding: 4pt; border-radius: 2em; background:lightgray">
+   Share
+ </span>
+ </div>
+ 
  
  <script type="text/javascript">
 
@@ -354,9 +359,10 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
      resetKeyboard()
 
      document.body.addEventListener('keydown', processKeyEvent)
-     document.body.addEventListener('touchend', processTouchEvent)
-     document.body.addEventListener('mouseup', processMouseUpEvent)
+     keyboard.addEventListener('touchend', processTouchEvent)
+     keyboard.addEventListener('mouseup', processMouseUpEvent)
      guesses.focus()
+     document.getElementById("share").addEventListener('mouseup', share)
  }
 
 
@@ -377,7 +383,9 @@ This is a Javascript implementation of Wordinal - WORDle on your Terminal.
      }
  }
 
- function share() {
+ function share(evt) {
+     if (evt)
+	 evt.preventDefault()
      var str = solution + "|" + attempts.join("|")
      var url = window.location + "?" + btoa(str)
      url = "https://api.whatsapp.com/send?text="+url
